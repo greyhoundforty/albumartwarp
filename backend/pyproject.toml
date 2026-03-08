@@ -1,0 +1,61 @@
+[project]
+name = "albumartwarp-backend"
+version = "0.1.0"
+description = "Audio analysis backend for AlbumArtWarp"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    # Web framework — async, fast, auto-generates OpenAPI docs
+    "fastapi>=0.115.0",
+    # ASGI server — runs FastAPI, --reload flag for hot-reload in dev
+    "uvicorn[standard]>=0.32.0",
+    # Parses multipart/form-data for file uploads
+    "python-multipart>=0.0.19",
+    # Audio feature extraction: BPM, beats, spectral features
+    "librosa>=0.10.2",
+    # Numerical computing — used everywhere by librosa
+    "numpy>=1.26.4",
+    # Scientific computing — used internally by librosa
+    "scipy>=1.13.0",
+    # Read/write audio files (WAV, FLAC, OGG, MP3 via libsndfile)
+    "soundfile>=0.12.1",
+    # HTTP client for Last.fm API calls
+    "httpx>=0.27.0",
+    # Data validation / serialization for API request/response models
+    "pydantic>=2.9.0",
+    # Loads .env files into pydantic Settings objects
+    "pydantic-settings>=2.6.0",
+    # Async file I/O for saving uploads without blocking the event loop
+    "aiofiles>=24.1.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3.0",
+    "pytest-asyncio>=0.24.0",
+    # httpx also used as an async test client for FastAPI
+    "httpx>=0.27.0",
+    # Linter + formatter (replaces flake8 + isort + black)
+    "ruff>=0.8.0",
+]
+
+[tool.ruff]
+line-length = 88
+target-version = "py310"
+
+[tool.ruff.lint]
+# E/W = pycodestyle errors/warnings, F = pyflakes, I = isort
+select = ["E", "W", "F", "I"]
+ignore = ["E501"]  # line too long — handled by formatter
+
+[tool.ruff.lint.isort]
+known-first-party = ["app"]
+
+[tool.pytest.ini_options]
+# auto mode: pytest-asyncio wraps async test functions automatically
+asyncio_mode = "auto"
+testpaths = ["tests"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["app*"]

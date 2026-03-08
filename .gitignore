@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+*.egg-info/
+.ruff_cache/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Uploaded audio files (potentially large — don't commit)
+backend/uploads/*.mp3
+backend/uploads/*.wav
+backend/uploads/*.flac
+backend/uploads/*.ogg
+backend/uploads/*.m4a
+backend/uploads/*.aac
+
+# Environment variables (contains API keys)
+.env
+.envrc
+
+# Node / frontend
+node_modules/
+dist/
+.vite/
+
+# OS
+.DS_Store
+Thumbs.db

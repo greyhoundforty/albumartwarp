@@ -1,0 +1,90 @@
+/* Controls.css */
+
+.controls {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1.5rem 2rem 2rem;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, transparent 100%);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  transition: opacity 0.4s ease;
+}
+
+.controls--visible {
+  opacity: 1;
+}
+
+.controls--hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ── Seek row ─────────────────────────────────────────────────────────── */
+.controls__seek-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.controls__seek {
+  flex: 1;
+  height: 4px;
+  appearance: none;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+  accent-color: var(--color-accent, #7c4dff);
+}
+
+.controls__seek::-webkit-slider-thumb {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  box-shadow: 0 0 6px rgba(124, 77, 255, 0.6);
+}
+
+.controls__time {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  min-width: 36px;
+  text-align: center;
+}
+
+/* ── Buttons row ─────────────────────────────────────────────────────── */
+.controls__buttons {
+  display: flex;
+  justify-content: center;
+}
+
+.controls__play-btn {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  font-size: 1.25rem;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, transform 0.1s;
+  backdrop-filter: blur(8px);
+}
+
+.controls__play-btn:hover {
+  background: rgba(124, 77, 255, 0.4);
+  transform: scale(1.05);
+}
+
+.controls__play-btn:active {
+  transform: scale(0.95);
+}

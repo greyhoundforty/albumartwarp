@@ -1,0 +1,69 @@
+# mise.toml — task runner + toolchain config
+# Run `mise install` first to get the right Python/Node versions.
+# Then `mise run install` to install all dependencies.
+
+[tools]
+python = "3.11"
+node = "20"
+
+# ── Installation ──────────────────────────────────────────────────────────────
+
+[tasks.install]
+description = "Install all backend and frontend dependencies"
+run = [
+  "cd backend && uv sync --all-extras",
+  "cd frontend && npm install",
+]
+
+# ── Development servers ───────────────────────────────────────────────────────
+
+[tasks."dev:backend"]
+description = "Start FastAPI backend with hot-reload on :8000"
+run = "cd backend && uv run uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"
+
+[tasks."dev:frontend"]
+description = "Start Vite dev server on :5173"
+run = "cd frontend && npm run dev"
+
+# ── Build ──────────────────────────────────────────────────────────────────────
+
+[tasks.build]
+description = "Build frontend for production"
+run = "cd frontend && npm run build"
+
+# ── Tests ──────────────────────────────────────────────────────────────────────
+
+[tasks."test:backend"]
+description = "Run Python test suite with pytest"
+run = "cd backend && uv run pytest tests/ -v --tb=short"
+
+[tasks."test:frontend"]
+description = "Run Vitest test suite"
+run = "cd frontend && npm run test -- --run"
+
+# ── Linting ────────────────────────────────────────────────────────────────────
+
+[tasks."lint:backend"]
+description = "Lint Python with ruff"
+run = "cd backend && uv run ruff check app/ tests/"
+
+[tasks."lint:frontend"]
+description = "Lint JS/JSX with ESLint"
+run = "cd frontend && npm run lint"
+
+[tasks."lint:fix"]
+description = "Auto-fix all lint issues"
+run = [
+  "cd backend && uv run ruff check --fix app/ tests/ && uv run ruff format app/ tests/",
+  "cd frontend && npm run lint -- --fix",
+]
+
+# ── Cleanup ────────────────────────────────────────────────────────────────────
+
+[tasks.clean]
+description = "Remove build artifacts and uploaded files"
+run = [
+  "rm -rf backend/.venv backend/__pycache__",
+  "rm -rf frontend/node_modules frontend/dist",
+  "find backend/uploads -type f ! -name '.gitkeep' -delete",
+]
