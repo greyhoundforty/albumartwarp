@@ -3,7 +3,7 @@
 # Then `mise run install` to install all dependencies.
 
 [tools]
-python = "3.11"
+python = "3.10"   # matches backend/.python-version
 node = "20"
 
 # ── Installation ──────────────────────────────────────────────────────────────
@@ -11,7 +11,10 @@ node = "20"
 [tasks.install]
 description = "Install all backend and frontend dependencies"
 run = [
-  "cd backend && uv sync --all-extras",
+  # uv lock regenerates uv.lock for the current platform/uv version.
+  # UV_LINK_MODE=copy avoids hardlink errors when cache and project are on
+  # different filesystems (common on macOS with pyenv-managed Pythons).
+  "cd backend && uv lock && UV_LINK_MODE=copy uv sync --all-extras",
   "cd frontend && npm install",
 ]
 
